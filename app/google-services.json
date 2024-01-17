@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "497822616779",
+    "project_id": "reflect-e2b30",
+    "storage_bucket": "reflect-e2b30.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497822616779:android:3ac4b058a27d4c26c5df4e",
+        "android_client_info": {
+          "package_name": "com.reflect.reflect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXSSDpYwWReiRyVmJzYBqbNsTZvh-cdF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
