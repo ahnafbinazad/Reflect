@@ -32,7 +32,7 @@ To keep users informed and connected, Reflect features a curated news feed with 
 
 ## Running Reflect
 
-Follow these instructions to run Reflect on your Android device:
+Follow these instructions to run Reflect on your computing device (This app will be made available in the AppStore in the future):
 
 1. **Install Android Studio:**
    - Ensure that you have Android Studio installed on your development machine. If not, download and install it from [Android Studio's official website](https://developer.android.com/studio).
@@ -44,6 +44,7 @@ Follow these instructions to run Reflect on your Android device:
    - Open the Reflect project in Android Studio.
    - Connect your Android device to your development machine.
    - Select your device from the list of available devices.
+   - Or start your virtual device on Android Studio.
    - Run the Gradle build by clicking the "Run" button in Android Studio.
 
 By following these steps, you should be able to successfully run Reflect on your Android device, allowing you to explore its features and contribute to your mental well-being.
