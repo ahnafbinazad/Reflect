@@ -266,7 +266,7 @@ public class HomeFragment extends BaseFragment {
 
     private void sureToLogOut() {
         new MaterialAlertDialogBuilder(requireContext())
-                .setMessage("Are you sure to logout?")
+                .setMessage("Are you sure you want to logout?")
                 .setPositiveButton("No",null)
                 .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
