@@ -22,28 +22,36 @@ import com.reflect.reflect.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends BaseActivity {
 
+    // Binding instance for the activity
     private ActivityLoginBinding binding;
 
+    // Lifecycle method called when the activity starts
     @Override
     protected void onStart() {
         super.onStart();
+        // Check if user is already signed in
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            // If user is signed in, navigate to main dash activity
             toMainDash();
         }
     }
 
+    // Lifecycle method called when the activity is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Inflate the layout using the binding
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Adjust window to resize when keyboard appears
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
+        // Find email and password EditText views
         EditText etEmail = findViewById(R.id.etEmail);
         EditText etPassword = findViewById(R.id.etPassword);
 
-        // Add TextWatcher for etEmail
+        // Add TextWatcher for etEmail to change text color to white
         etEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -62,7 +70,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        // Add TextWatcher for etPassword
+        // Add TextWatcher for etPassword to change text color to white
         etPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -81,38 +89,52 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+        // Set onClickListener for Sign In button
         binding.btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();
             }
         });
+
+        // Set onClickListener for "Create Account" text view to navigate to register activity
         binding.txtCreateAccount.setOnClickListener(v -> {
             startActivity(new Intent(this, RegisterActivity.class));
         });
     }
 
+    // Method to handle user sign-in
     private void signIn() {
         String email = binding.etEmail.getText().toString();
         String password = binding.etPassword.getText().toString();
         if (email.isEmpty() || password.isEmpty()) {
+            // Display error message if email or password is empty
             binding.txtError.setText("All fields are required.");
             return;
-        } else binding.txtError.setText(null);
+        } else {
+            // Clear error message
+            binding.txtError.setText(null);
+        }
+        // Show progress dialog
         showProgressDialog();
+        // Sign in with email and password using FirebaseAuth
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                // Hide progress dialog
                 hideProgress();
                 if (task.isSuccessful()) {
+                    // If sign-in is successful, navigate to main dash activity
                     toMainDash();
                 } else {
+                    // If sign-in fails, display error message
                     binding.txtError.setText(task.getException().getMessage());
                 }
             }
         });
     }
 
+    // Method to navigate to main dash activity
     private void toMainDash() {
         startActivity(new Intent(LoginActivity.this, DashActivity.class));
         finishAfterTransition();

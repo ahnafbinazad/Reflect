@@ -368,7 +368,7 @@ public class HomeFragment extends BaseFragment {
                 hideProgress();
                 if (task.isSuccessful()) {
                     showSuccessScreen();
-                    clearFields();
+//                    clearFields();
                 } else {
                     Toast.makeText(requireContext(), "Error failed to save.", Toast.LENGTH_SHORT).show();
                 }
