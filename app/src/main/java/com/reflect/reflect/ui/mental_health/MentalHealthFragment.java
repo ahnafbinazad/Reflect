@@ -32,10 +32,18 @@ import com.reflect.reflect.adapter.NewsAdapter;
 import com.reflect.reflect.databinding.FragmentMentalHealthBinding;
 
 // Import MentalHealthRecords from the com.reflect.reflect.model package.
+import com.reflect.reflect.model.Article;
 import com.reflect.reflect.model.MentalHealthRecords;
 
 // Import RetrofitProvider from the com.reflect.reflect package.
 import com.reflect.reflect.RetrofitProvider;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 
 // Define a class named MentalHealthFragment that extends Fragment.
 public class MentalHealthFragment extends Fragment {
@@ -69,7 +77,24 @@ public class MentalHealthFragment extends Fragment {
         mViewModel.getRecords().observe(getViewLifecycleOwner(), new Observer<MentalHealthRecords>() {
             @Override
             public void onChanged(MentalHealthRecords mentalHealthRecords) {
-                // Update the NewsAdapter with the new MentalHealthRecords data.
+                // Sort the articles by date published
+                Collections.sort(mentalHealthRecords.getArticles(), new Comparator<Article>() {
+                    @Override
+                    public int compare(Article article1, Article article2) {
+                        // Parse the dates from strings to Date objects
+                        Date date1 = parseDate(article1.getPublishedAt());
+                        Date date2 = parseDate(article2.getPublishedAt());
+
+                        // Compare the dates
+                        if (date1 != null && date2 != null) {
+                            return date2.compareTo(date1); // Sorting in descending order
+                        } else {
+                            return 0; // Handle if parsing fails, or dates are null
+                        }
+                    }
+                });
+
+                // Update the NewsAdapter with the sorted MentalHealthRecords data.
                 newsAdapter.setArticles(mentalHealthRecords.getArticles());
             }
         });
@@ -80,6 +105,17 @@ public class MentalHealthFragment extends Fragment {
         // If MentalHealthRecords LiveData is null, load news.
         if (mViewModel.getRecords().getValue() == null) {
             loadNews();
+        }
+    }
+
+    // Method to parse date from string. Used to organise articles in onCreate
+    private Date parseDate(String dateStr) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        try {
+            return dateFormat.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null; // Return null if parsing fails
         }
     }
 

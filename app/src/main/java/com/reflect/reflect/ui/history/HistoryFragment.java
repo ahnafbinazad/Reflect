@@ -105,10 +105,13 @@ public class HistoryFragment extends BaseFragment {
         // Observe changes in selected time LiveData
         mViewModel.selectedTime.observe(getViewLifecycleOwner(), aLong -> {
             // Update date text view with selected date
-            binding.txtDate.setText(new SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH).format(aLong));
+            String formattedDate = new SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH).format(aLong);
+            String dateWithArrow = formattedDate +  "▼";
+            binding.txtDate.setText(dateWithArrow);
             // Load data for the selected date
             loadData();
         });
+
 
         // Set initial date value if not already set
         if (mViewModel.selectedTime.getValue() != null) {
