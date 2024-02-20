@@ -24,6 +24,7 @@ import android.Manifest;
 import com.google.android.gms.common.data.DataHolder;
 
 import java.util.Calendar;
+import java.util.Random;
 
 // Define a class named BaseActivity that extends AppCompatActivity.
 public class BaseActivity extends AppCompatActivity {
@@ -61,34 +62,20 @@ public class BaseActivity extends AppCompatActivity {
 
         // Create the notification channel if it doesn't exist.
         createNotificationChannel();
-
-        Intent intent = new Intent(this, DashActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        // Build notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "reminders")
-                .setSmallIcon(R.drawable.baseline_calendar_today_24)
-                .setContentTitle("Daily Reminder")
-                .setContentText("Did you Reflect on your day today?")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                // Set the intent that fires when the user taps the notification.
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
-
-        // Get the NotificationManagerCompat and show the notification
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(0, builder.build());
-
         scheduleDailyNotification();
     }
 
     // Define a method to schedule the daily notification.
     private void scheduleDailyNotification() {
+
+        Random random = new Random();
+        int hour = random.nextInt(25);
+        int minute = random.nextInt(61);
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 4);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
 
         // Create an intent to be fired at the specified time.
         Intent notificationIntent = new Intent(this, NotificationReceiver.class);

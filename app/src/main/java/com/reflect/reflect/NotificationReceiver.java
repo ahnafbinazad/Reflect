@@ -30,7 +30,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         // Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setSmallIcon(R.drawable.baseline_calendar_today_24)
                 .setContentTitle("Daily Reminder")
                 .setContentText("Did you Reflect on your day today?")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
