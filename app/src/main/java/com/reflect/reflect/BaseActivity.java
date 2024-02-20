@@ -68,8 +68,10 @@ public class BaseActivity extends AppCompatActivity {
     // Define a method to schedule the daily notification.
     private void scheduleDailyNotification() {
 
+        // Creates a random number to send notification
         Random random = new Random();
-        int hour = random.nextInt(25);
+        // Creates a number between 7 to 23, to make sure notifications are sent in waking hours
+        int hour = random.nextInt(17) + 7;
         int minute = random.nextInt(61);
 
         Calendar calendar = Calendar.getInstance();
